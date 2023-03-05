@@ -1,0 +1,84 @@
+{
+  "objects": [
+    {
+      "name": "Sun",
+      "radius_km": 695508,
+      "radius_multiplier": 1,
+      "time_multiplier": 1,
+      "symbolic_distance": 0.8,
+      "earth_mass": 332946.0487
+    },
+    {
+      "name": "Mercury",
+      "radius_km": 2439.4,
+      "radius_multiplier": 25,
+      "time_multiplier": 0.7,
+      "symbolic_distance": 1.8,
+      "earth_mass": 0.0553
+    },
+    {
+      "name": "Venus",
+      "radius_km": 6052,
+      "radius_multiplier": 25,
+      "time_multiplier": 1,
+      "symbolic_distance": 2,
+      "earth_mass": 0.815
+    },
+    {
+      "name": "Earth",
+      "radius_km": 6371.0084,
+      "radius_multiplier": 25,
+      "time_multiplier": 1,
+      "symbolic_distance": 2.25,
+      "earth_mass": 1
+    },
+    {
+      "name": "Mars",
+      "radius_km": 3389.5,
+      "radius_multiplier": 25,
+      "time_multiplier": 1,
+      "symbolic_distance": 2.43,
+      "earth_mass": 0.107
+    },
+    {
+      "name": "Jupiter",
+      "radius_km": 69911,
+      "radius_multiplier": 5,
+      "time_multiplier": 4,
+      "symbolic_distance": 2.8,
+      "earth_mass": 317.8
+    },
+    {
+      "name": "Saturn",
+      "radius_km": 58232,
+      "radius_multiplier": 5,
+      "time_multiplier": 4,
+      "symbolic_distance": 3.15,
+      "earth_mass": 95.2
+    },
+    {
+      "name": "Uranus",
+      "radius_km": 25362,
+      "radius_multiplier": 6,
+      "time_multiplier": 10,
+      "symbolic_distance": 3.37,
+      "earth_mass": 14.5
+    },
+    {
+      "name": "Neptune",
+      "radius_km": 24622,
+      "radius_multiplier": 6,
+      "time_multiplier": 10,
+      "symbolic_distance": 3.52,
+      "earth_mass": 17.1
+    },
+    {
+      "name": "Pluto",
+      "radius_km": 1188.3,
+      "radius_multiplier": 25,
+      "time_multiplier": 15,
+      "symbolic_distance": 3.61,
+      "earth_mass": 0.0025
+    }
+  ]
+}
