@@ -4,11 +4,13 @@ import {Body} from "astronomy-engine";
 import {CelestialObjectPlaced} from "../models/celestial-object-placed";
 
 export class BarycentricSolarSystem {
+    private time = 0
     constructor(private data: CelestialObjectModel[]) {
     }
 
-    getBarycentricData(time: number) {
-        return getBarycentricData(this.data, time)
+    getNextState() {
+        this.time += 5000000
+        return getBarycentricData(this.data, this.time)
     }
 }
 

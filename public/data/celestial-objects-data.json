@@ -4,7 +4,7 @@
       "name": "Sun",
       "radius_km": 695508,
       "radius_multiplier": 1,
-      "time_multiplier": 1,
+      "time_multiplier": 2,
       "symbolic_distance": 0.8,
       "earth_mass": 332946.0487
     },
@@ -75,7 +75,7 @@
     {
       "name": "Pluto",
       "radius_km": 1188.3,
-      "radius_multiplier": 25,
+      "radius_multiplier": 35,
       "time_multiplier": 15,
       "symbolic_distance": 3.61,
       "earth_mass": 0.0025

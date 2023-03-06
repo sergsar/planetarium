@@ -14,6 +14,7 @@ const Scene: React.FC = () => {
             <ambientLight />
             <pointLight position={[1000, 1000, 1000]} />
             <gridHelper
+                visible={false}
                 args={[50, 25]}
             />
             <OrbitControls/>
