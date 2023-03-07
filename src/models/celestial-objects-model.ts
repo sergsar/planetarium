@@ -4,6 +4,5 @@ export interface CelestialObjectModel {
     radius: number;
     mass: number;
     radiusMultiplier: number;
-    timeMultiplier: number;
     distance: number;
 }

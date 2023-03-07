@@ -7,7 +7,6 @@ export const convertObjectToModel = (item: CelestialObjectContract): CelestialOb
         radius: item.radius_km,
         mass: item.earth_mass,
         radiusMultiplier: item.radius_multiplier,
-        timeMultiplier: item.time_multiplier,
         distance: item.symbolic_distance
     }
 }

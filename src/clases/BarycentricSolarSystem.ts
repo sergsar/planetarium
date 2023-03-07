@@ -25,7 +25,7 @@ const getBarycentricData = (objects: CelestialObjectModel[], time: number) => {
     const placed: CelestialObjectPlaced[] = []
     let ssb = { x: 0, y: 0, z: 0 }
     planets.forEach((curr) => {
-        const astronomyTime = Astronomy.MakeTime(new Date(time * curr.timeMultiplier))
+        const astronomyTime = Astronomy.MakeTime(new Date(time))
         const pmass = curr.mass
         const shift = pmass / (pmass + sunMass);
         const { x, y, z } = Astronomy.HelioVector(curr.name as unknown as Body, astronomyTime)
@@ -52,11 +52,11 @@ const getBarycentricData = (objects: CelestialObjectModel[], time: number) => {
         curr.position.z *= curr.distance
     })
 
+    // increase sun moving effect
     const sunRotateFx = {
-        x: Math.cos(time * 0.0000000002 * sun.timeMultiplier),
-        y: Math.sin(time * 0.0000000002 * sun.timeMultiplier),
-    } // increase sun moving effect
-
+        x: Math.cos(time * 0.0000000002),
+        y: Math.sin(time * 0.0000000002),
+    }
     ssb.x += sunRotateFx.x
     ssb.y += sunRotateFx.y
 
