@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import CelestialObject from "./CelestialObject";
 import {useFrame} from "@react-three/fiber";
-import {CelestialObjectPlaced} from "../models/celestial-object-placed";
+import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
 import useSolarSystem from "../hooks/useSolarSystem";
 
 const SolarSystem: React.FC = () => {
-    const [data, setData] = useState<CelestialObjectPlaced[]>()
+    const [data, setData] = useState<CelestialObjectSnapshot[]>()
 
 
     const solarSystem = useSolarSystem()

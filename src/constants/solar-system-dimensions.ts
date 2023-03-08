@@ -1,1 +1,0 @@
-export const RADIUS_MULTIPLIER = 0.000003

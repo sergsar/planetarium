@@ -4,13 +4,13 @@ import React, {useEffect, useRef} from "react";
 import {Vector3} from "three"
 import {OrbitControls as OrbitControlsType} from "three-stdlib";
 import SolarSystem from "./SolarSystem";
-import useEquirectangularMap from "../hooks/useEquirectangularMap";
+import useEquirectangularTexture from "../hooks/useEquirectangularTexture";
 
 const Scene: React.FC = () => {
     const { camera } = useThree()
     const controls = useRef<OrbitControlsType>(null)
 
-    const { cube } = useEquirectangularMap({ path: 'textures/solarsystemscope.com/8k_stars_milky_way.jpg'})
+    const { texture } = useEquirectangularTexture({ path: 'textures/solarsystemscope.com/8k_stars_milky_way.jpg'})
 
     useEffect(() => {
         camera.position.set(10, 10, 10)
@@ -25,21 +25,26 @@ const Scene: React.FC = () => {
         const target = current.target
         camera.position
             .sub(target)
-            .applyAxisAngle(new Vector3(0, 1, 0), 0.0005)
+            .applyAxisAngle(new Vector3(0, 1, 0), -0.0005)
             .add(target)
     })
 
     return (
         <>
-            {cube && <primitive attach='background' object={cube.texture} />}
-            <ambientLight />
-            <pointLight position={[1000, 1000, 1000]} />
+            {texture && <primitive attach='background' object={texture} />}
+            <ambientLight intensity={0.1} />
+            <pointLight position={[0, 0, 0]} />
             <gridHelper
                 visible={false}
                 args={[50, 25]}
             />
             <OrbitControls
                 ref={controls}
+                maxDistance={30}
+                minDistance={5}
+                enablePan={false}
+                zoomSpeed={0.3}
+                dampingFactor={1}
             />
 
             <SolarSystem />

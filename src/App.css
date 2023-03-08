@@ -1,5 +1,6 @@
 .site-content {
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 .planetarium-canvas {

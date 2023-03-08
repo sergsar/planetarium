@@ -1,0 +1,3 @@
+export const RADIUS_MULTIPLIER = 0.000003
+export const SELF_ROTATION_MULTIPLIER = 0.05
+export const TIME_PER_FRAME = 1500000

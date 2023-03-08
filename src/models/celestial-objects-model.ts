@@ -4,5 +4,7 @@ export interface CelestialObjectModel {
     radius: number;
     mass: number;
     radiusMultiplier: number;
+    rotationMultiplier: number;
     distance: number;
+    eqImageUrl: string;
 }

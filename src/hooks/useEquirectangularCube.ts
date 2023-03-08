@@ -2,11 +2,14 @@ import {useEffect, useState} from "react";
 import {Texture, TextureLoader, WebGLCubeRenderTarget} from "three";
 import {useThree} from "@react-three/fiber";
 
-const useEquirectangularMap = ({ path }: { path: string }) => {
+const useEquirectangularCube = ({ path }: { path: string }) => {
     const { gl } = useThree()
     const [texture, setTexture] = useState<Texture|null>(null)
     const [cube, setCube] = useState<WebGLCubeRenderTarget|null>(null)
     useEffect(() => {
+        if (!path) {
+            return
+        }
         const textureLoader = new TextureLoader()
         textureLoader.load(path, (texture) => setTexture(texture))
     }, [path])
@@ -23,4 +26,4 @@ const useEquirectangularMap = ({ path }: { path: string }) => {
     return { cube }
 }
 
-export default useEquirectangularMap
+export default useEquirectangularCube
