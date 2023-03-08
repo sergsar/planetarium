@@ -1,12 +1,9 @@
 import {useEffect, useState} from "react";
 import {
-    ClampToEdgeWrapping,
     EquirectangularReflectionMapping,
     Texture,
-    TextureLoader,
-    WebGLCubeRenderTarget
+    TextureLoader
 } from "three";
-import {CubeReflectionMapping} from "three/src/constants";
 
 const useEquirectangularTexture = ({ path }: { path: string }) => {
     const [texture, setTexture] = useState<Texture|null>(null)
@@ -24,6 +21,7 @@ const useEquirectangularTexture = ({ path }: { path: string }) => {
             return
         }
         texture.mapping = EquirectangularReflectionMapping
+        texture.generateMipmaps = false
     }, [texture])
 
     return { texture }
