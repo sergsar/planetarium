@@ -4,7 +4,7 @@
       "name": "Sun",
       "radius_km": 695508,
       "radius_multiplier": 1,
-      "self_rotation_multiplier": 10,
+      "self_rotation_multiplier": 9,
       "symbolic_distance": 0.8,
       "earth_mass": 332946.0487,
       "eq_image_url": "textures/solarsystemscope.com/2k_sun.jpg"

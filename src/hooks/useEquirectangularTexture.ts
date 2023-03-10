@@ -21,7 +21,6 @@ const useEquirectangularTexture = ({ path }: { path: string }) => {
             return
         }
         texture.mapping = EquirectangularReflectionMapping
-        texture.generateMipmaps = false
     }, [texture])
 
     return { texture }

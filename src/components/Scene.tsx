@@ -33,7 +33,7 @@ const Scene: React.FC = () => {
         <>
             {texture && <primitive attach='background' object={texture} />}
             <ambientLight intensity={0.1} />
-            <pointLight position={[0, 0, 0]} />
+            <pointLight intensity={2} position={[0, 0, 0]} />
             <gridHelper
                 visible={false}
                 args={[50, 25]}

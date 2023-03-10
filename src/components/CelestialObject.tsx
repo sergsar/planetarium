@@ -1,11 +1,13 @@
-import React, {useEffect, useMemo, useRef} from "react";
-import {Group, Mesh, ShaderMaterial, Texture, Vector3} from "three";
+import React, {useEffect, useMemo, useRef, useState} from "react";
+import {DoubleSide, Group, Mesh, MeshPhongMaterial, ShaderMaterial, Texture, Vector3} from "three";
 import {RADIUS_MULTIPLIER, SELF_ROTATION_MULTIPLIER} from "../constants/solar-system-parameters";
 import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
 import useEquirectangularTexture from "../hooks/useEquirectangularTexture";
-import {useFrame, useThree} from "@react-three/fiber";
+import {useFrame} from "@react-three/fiber";
 import {DEG_TO_RAD} from "../constants/math";
 import * as sunShaders from "../shaders/sun-shaders"
+import * as atmosphereShaders from "../shaders/atmosphere-shaders"
+import {useFBX} from "@react-three/drei";
 
 interface CelestialObjectProps {
     object: CelestialObjectSnapshot
@@ -23,7 +25,6 @@ interface SunMaterialProps {
 }
 
 const SunMaterial: React.FC<SunMaterialProps> = ({ texture }) => {
-    const { camera } = useThree()
 
     const material = useRef<ShaderMaterial>(null)
 
@@ -31,19 +32,13 @@ const SunMaterial: React.FC<SunMaterialProps> = ({ texture }) => {
         return {
             uniforms: {
                 map: { value: texture},
-                cameraVector: { type: "v3", value: camera.position }
             },
             vertexShader: sunShaders.vertex,
             fragmentShader: sunShaders.fragment
         }
-    }, [])
+    }, [texture])
 
 
-    useFrame(() => {
-        if (material.current) {
-            material.current.uniforms.cameraVector.value = camera.position
-        }
-    })
 
     return <shaderMaterial ref={material} {...sunMaterialParameters} transparent={true} />
 }
@@ -52,9 +47,54 @@ const CelestialObjectMaterial: React.FC<CelestialObjectMaterialProps> = ({ name,
 
 
     if (name === 'Sun') {
+        texture.generateMipmaps = false
         return <SunMaterial texture={texture} wireframe={wireframe} />
     }
     return <meshPhongMaterial map={texture} color="white" wireframe={wireframe}/>
+}
+
+const Atmosphere: React.FC = () => {
+    const material = useRef<ShaderMaterial>(null)
+
+    const atmMaterialParameters = useMemo(() => {
+        return {
+            vertexShader: atmosphereShaders.vertex,
+            fragmentShader: atmosphereShaders.fragment
+        }
+    }, [])
+
+    return (
+        <mesh scale={1.1}>
+            <sphereGeometry />
+            <shaderMaterial  ref={material} {...atmMaterialParameters} transparent={true} />
+        </mesh>
+    )
+}
+
+const SaturnRings: React.FC = () => {
+    const fbx = useFBX('fbx/saturn.fbx')
+
+    const [model, setModel] = useState<Group>()
+
+    useEffect(() => {
+        const model = fbx.clone(true)
+        model.children.forEach((item) => {
+            if (!(item instanceof Mesh)) {
+                return
+            }
+            const material = item.material
+            if (!(material instanceof MeshPhongMaterial)) {
+                return;
+            }
+            material.side = DoubleSide
+            material.emissive.set('white')
+        })
+        setModel(model)
+    }, [fbx])
+    if (!model) {
+        return <></>
+    }
+    return <primitive object={model} position={0} scale={1.9} />
 }
 
 const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
@@ -85,11 +125,13 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
     })
 
     return (
-        <group ref={group}>
+        <group ref={group} scale={radius * RADIUS_MULTIPLIER * radiusMultiplier}>
+            {['Saturn'].includes(name) && <SaturnRings />}
+            {['Earth'].includes(name) && <Atmosphere />}
             <mesh
                 ref={mesh}
             >
-                <sphereGeometry args={[radius * RADIUS_MULTIPLIER * radiusMultiplier]} />
+                <sphereGeometry />
                 {texture && <CelestialObjectMaterial name={name} texture={texture} wireframe={false} />}
             </mesh>
         </group>
