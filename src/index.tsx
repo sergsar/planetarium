@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
       <RecoilRoot>
           <ErrorBoundary>
-              <React.Suspense fallback={<div>Loading...</div>}>
+              <React.Suspense fallback={<div className="site-loading">Loading...</div>}>
                   <App />
               </React.Suspense>
           </ErrorBoundary>

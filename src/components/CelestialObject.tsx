@@ -8,6 +8,8 @@ import {DEG_TO_RAD} from "../constants/math";
 import * as sunShaders from "../shaders/sun-shaders"
 import * as atmosphereShaders from "../shaders/atmosphere-shaders"
 import {useFBX} from "@react-three/drei";
+import {useRecoilValue} from "recoil";
+import fbxSelector from "../contexts/fbxSelector";
 
 interface CelestialObjectProps {
     object: CelestialObjectSnapshot
@@ -72,12 +74,12 @@ const Atmosphere: React.FC = () => {
 }
 
 const SaturnRings: React.FC = () => {
-    const fbx = useFBX('fbx/saturn.fbx')
+    const { group } = useRecoilValue(fbxSelector('fbx/saturn.fbx'))
 
     const [model, setModel] = useState<Group>()
 
     useEffect(() => {
-        const model = fbx.clone(true)
+        const model = group.clone(true)
         model.children.forEach((item) => {
             if (!(item instanceof Mesh)) {
                 return
@@ -90,7 +92,7 @@ const SaturnRings: React.FC = () => {
             material.emissive.set('white')
         })
         setModel(model)
-    }, [fbx])
+    }, [group])
     if (!model) {
         return <></>
     }

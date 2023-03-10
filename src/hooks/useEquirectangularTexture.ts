@@ -4,17 +4,11 @@ import {
     Texture,
     TextureLoader
 } from "three";
+import {useRecoilValue} from "recoil";
+import textureSelector from "../contexts/textureSelector";
 
 const useEquirectangularTexture = ({ path }: { path: string }) => {
-    const [texture, setTexture] = useState<Texture|null>(null)
-
-    useEffect(() => {
-        if (!path) {
-            return
-        }
-        const textureLoader = new TextureLoader()
-        textureLoader.load(path, (texture) => setTexture(texture))
-    }, [path])
+    const { texture } = useRecoilValue(textureSelector(path))
 
     useEffect(() => {
         if (!texture) {
