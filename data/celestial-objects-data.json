@@ -1,0 +1,94 @@
+{
+  "objects": [
+    {
+      "name": "Sun",
+      "radius_km": 695508,
+      "radius_multiplier": 1,
+      "self_rotation_multiplier": 9,
+      "symbolic_distance": 0.8,
+      "earth_mass": 332946.0487,
+      "eq_image_url": "textures/solarsystemscope.com/2k_sun.jpg"
+    },
+    {
+      "name": "Mercury",
+      "radius_km": 2439.4,
+      "radius_multiplier": 25,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 1.8,
+      "earth_mass": 0.0553,
+      "eq_image_url": "textures/solarsystemscope.com/0.25k_mercury.jpg"
+    },
+    {
+      "name": "Venus",
+      "radius_km": 6052,
+      "radius_multiplier": 25,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 2,
+      "earth_mass": 0.815,
+      "eq_image_url": "textures/solarsystemscope.com/0.5k_venus_surface.jpg"
+    },
+    {
+      "name": "Earth",
+      "radius_km": 6371.0084,
+      "radius_multiplier": 25,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 2.25,
+      "earth_mass": 1,
+      "eq_image_url": "textures/solarsystemscope.com/0.5k_earth_daymap.jpg"
+    },
+    {
+      "name": "Mars",
+      "radius_km": 3389.5,
+      "radius_multiplier": 25,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 2.43,
+      "earth_mass": 0.107,
+      "eq_image_url": "textures/solarsystemscope.com/0.5k_mars.jpg"
+    },
+    {
+      "name": "Jupiter",
+      "radius_km": 69911,
+      "radius_multiplier": 5,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 2.8,
+      "earth_mass": 317.8,
+      "eq_image_url": "textures/solarsystemscope.com/0.5k_jupiter.jpg"
+    },
+    {
+      "name": "Saturn",
+      "radius_km": 58232,
+      "radius_multiplier": 5,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 3.15,
+      "earth_mass": 95.2,
+      "eq_image_url": "textures/solarsystemscope.com/0.5k_saturn.jpg"
+    },
+    {
+      "name": "Uranus",
+      "radius_km": 25362,
+      "radius_multiplier": 6,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 3.37,
+      "earth_mass": 14.5,
+      "eq_image_url": "textures/solarsystemscope.com/0.25k_uranus.jpg"
+    },
+    {
+      "name": "Neptune",
+      "radius_km": 24622,
+      "radius_multiplier": 6,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 3.52,
+      "earth_mass": 17.1,
+      "eq_image_url": "textures/solarsystemscope.com/0.25k_neptune.jpg"
+    },
+    {
+      "name": "Pluto",
+      "radius_km": 1188.3,
+      "radius_multiplier": 35,
+      "self_rotation_multiplier": 1,
+      "symbolic_distance": 3.61,
+      "earth_mass": 0.0025,
+      "eq_image_url": "textures/pluto_eq.jpg"
+    }
+  ]
+}
