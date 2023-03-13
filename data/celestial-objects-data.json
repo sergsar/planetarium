@@ -32,7 +32,7 @@
       "radius_km": 6371.0084,
       "radius_multiplier": 25,
       "self_rotation_multiplier": 1,
-      "symbolic_distance": 7,
+      "symbolic_distance": 6.2,
       "earth_mass": 1,
       "eq_image_url": "textures/solarsystemscope.com/0.5k_earth_daymap.jpg"
     },
@@ -41,7 +41,7 @@
       "radius_km": 3389.5,
       "radius_multiplier": 25,
       "self_rotation_multiplier": 1,
-      "symbolic_distance": 8.5,
+      "symbolic_distance": 8.2,
       "earth_mass": 0.107,
       "eq_image_url": "textures/solarsystemscope.com/0.5k_mars.jpg"
     },
