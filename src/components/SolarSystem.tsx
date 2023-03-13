@@ -1,28 +1,17 @@
-import React, {useState} from "react";
-import CelestialObject from "./CelestialObject";
-import {useFrame} from "@react-three/fiber";
-import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
-import useSolarSystem from "../hooks/useSolarSystem";
+import React from "react";
+import {useRecoilValue} from "recoil";
+import solarSystemSelector from "../contexts/solarSystemSelector";
+import CelestialObjects from "./CelestialObjects";
+import Orbits from "./Orbits";
 
 const SolarSystem: React.FC = () => {
-    const [data, setData] = useState<CelestialObjectSnapshot[]>()
 
-
-    const solarSystem = useSolarSystem()
-
-
-    useFrame(() => setData(solarSystem?.getNextState()))
-
-    if (!data) {
-        return <></>
-    }
+    const { system } = useRecoilValue(solarSystemSelector)
 
     return (
         <>
-            {data
-                .map((object, index) =>
-                    <CelestialObject object={object} key={index} />
-                )}
+            <CelestialObjects system={system} />
+            <Orbits system={system} />
         </>
     )
 }

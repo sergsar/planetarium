@@ -3,11 +3,15 @@ import * as Astronomy from "astronomy-engine";
 import {Body} from "astronomy-engine";
 import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
 import {TIME_PER_FRAME} from "../constants/solar-system-parameters";
+import {getAngle, normalize} from "../utils/math";
 
 export class BarycentricSolarSystem {
+    public readonly paths
+
     private time = new Date().getTime()
+
     constructor(private data: CelestialObjectModel[]) {
-        // buildOrbitPaths(data)
+        this.paths = collectOrbitPaths(data, this.time)
     }
 
     getNextState() {
@@ -16,29 +20,63 @@ export class BarycentricSolarSystem {
     }
 }
 
-const buildOrbitPaths = (objects: CelestialObjectModel[]) => {
-    const points = 36
-    const sampleTime = 100000
-    let startAngle = 0
-    let endAngle = 0
-    let time = 0
-    const result = []
-    let counter = 0
-
-    while (endAngle < 360 && counter < 1000) {
-        const data = getSnapshotData(objects, time)
-        let minAngle = endAngle
-        for (let item of data) {
-            const position = item.position
-            const angle = Math.atan2(position.x, position.y)
-            minAngle = Math.min(minAngle, angle)
+const collectOrbitPaths = (objects: CelestialObjectModel[], time: number) => {
+    const PI2 = Math.PI * 2
+    const points = 128
+    const stepAngle = Math.PI * 2 / points
+    const sampleTimes = [10000000, 100000000, 500000000, 1000000000, 10000000000, 100000000000]
+    const paths = new Array(objects.length).fill(0).map(() => [] as Array<{ x: number, y: number, z: number}>)
+    const angles = paths.map((item) => 0)
+    const names = []
+    for (let sampleTime of sampleTimes) {
+        let counter = 0
+        let minPoints = 0
+        angles.forEach((angle, index) => {
+            if (angle < PI2) {
+                paths[index] = []
+                angles[index] = 0
+            }
+        })
+        while (minPoints < points && counter < 500) {
+            const data = getSnapshotData(objects, time)
+            for (let i = 0; i < data.length; i++) {
+                const item = data[i]
+                const position = item.position
+                const positions = paths[i]
+                if (angles[i] >= PI2) {
+                    continue
+                }
+                if (positions.length >= points) {
+                    continue
+                }
+                const previous = positions[positions.length - 1]
+                if (!previous) {
+                    positions.push(position)
+                    names[i] = item.name
+                    continue
+                }
+                const angle = getAngle(previous, position)
+                if (angle > stepAngle) {
+                    angles[i] += angle
+                    positions.push(position)
+                }
+                if (PI2 - angles[i] < stepAngle) {
+                    angles[i] = PI2
+                }
+            }
+            minPoints = Math.min(...paths.map((item) => item.length))
+            time += sampleTime
+            counter++
         }
-        startAngle = Math.min(startAngle, minAngle)
-        endAngle = minAngle - startAngle
-        time += sampleTime
-        counter++
-        console.log(startAngle)
     }
+    paths.forEach((item) => {
+        // item.push(item[0])
+        Object.freeze(item)
+    })
+    console.log('paths: ', paths)
+    const result = names.map((name, index) => ({ name, path: paths[index]}))
+    Object.freeze(result)
+    return result
 }
 
 const getSnapshotData = (objects: CelestialObjectModel[], time: number) => {
@@ -108,10 +146,4 @@ const getSnapshotData = (objects: CelestialObjectModel[], time: number) => {
     })
 
     return placed
-}
-
-const normalize = ({ x, y, z }: { x: number, y: number, z: number }) => {
-    const magnitude = Math.sqrt(x * x + y * y + z * z) || 1
-
-    return { x: x / magnitude, y: y / magnitude, z: z / magnitude }
 }

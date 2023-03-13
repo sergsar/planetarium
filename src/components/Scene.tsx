@@ -13,7 +13,7 @@ const Scene: React.FC = () => {
     const { texture } = useEquirectangularTexture({ path: 'textures/solarsystemscope.com/8k_stars_milky_way.jpg'})
 
     useEffect(() => {
-        camera.position.set(10, 10, 10)
+        camera.position.set(-10, 10, 10)
     }, [camera])
 
     useFrame(() => {
@@ -40,7 +40,7 @@ const Scene: React.FC = () => {
             />
             <OrbitControls
                 ref={controls}
-                maxDistance={30}
+                maxDistance={35}
                 minDistance={5}
                 enablePan={false}
                 zoomSpeed={0.3}

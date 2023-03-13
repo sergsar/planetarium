@@ -1,8 +1,6 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {
     EquirectangularReflectionMapping,
-    Texture,
-    TextureLoader
 } from "three";
 import {useRecoilValue} from "recoil";
 import textureSelector from "../contexts/textureSelector";

@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <RecoilRoot>
+      <RecoilRoot override>
           <ErrorBoundary>
               <React.Suspense fallback={<div className="site-loading">Loading...</div>}>
                   <App />

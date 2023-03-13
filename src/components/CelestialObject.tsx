@@ -7,7 +7,6 @@ import {useFrame} from "@react-three/fiber";
 import {DEG_TO_RAD} from "../constants/math";
 import * as sunShaders from "../shaders/sun-shaders"
 import * as atmosphereShaders from "../shaders/atmosphere-shaders"
-import {useFBX} from "@react-three/drei";
 import {useRecoilValue} from "recoil";
 import fbxSelector from "../contexts/fbxSelector";
 
@@ -73,8 +72,8 @@ const Atmosphere: React.FC = () => {
     )
 }
 
-const SaturnRings: React.FC = () => {
-    const { group } = useRecoilValue(fbxSelector('fbx/saturn.fbx'))
+const Rings: React.FC<{ name: string }> = ({ name }) => {
+    const { group } = useRecoilValue(fbxSelector(`fbx/${name}.fbx`))
 
     const [model, setModel] = useState<Group>()
 
@@ -113,7 +112,7 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
             object.position.x,
             object.position.z,
             -object.position.y
-        ).multiplyScalar(object.distance)
+        )
         group.current?.position.copy(position)
     }, [object])
 
@@ -128,7 +127,8 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
 
     return (
         <group ref={group} scale={radius * RADIUS_MULTIPLIER * radiusMultiplier}>
-            {['Saturn'].includes(name) && <SaturnRings />}
+            {['Saturn'].includes(name) && <Rings name="saturn"/>}
+            {['Uranus'].includes(name) && <Rings name="uranus"/>}
             {['Earth'].includes(name) && <Atmosphere />}
             <mesh
                 ref={mesh}
