@@ -7,8 +7,6 @@ const SolarSystem: React.FC = () => {
 
     const { system } = useSolarSystem()
 
-    // console.log('system: ', system)
-
     return (
         <>
             <CelestialObjects system={system} />

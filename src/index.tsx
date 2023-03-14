@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {RecoilRoot} from "recoil";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Preloader from "./components/Preloader";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +14,7 @@ root.render(
   <React.StrictMode>
       <RecoilRoot>
           <ErrorBoundary>
-              <React.Suspense fallback={<div className="site-loading">Loading...</div>}>
+              <React.Suspense fallback={<Preloader />}>
                   <App />
               </React.Suspense>
           </ErrorBoundary>
