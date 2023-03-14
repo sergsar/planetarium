@@ -1,12 +1,13 @@
 import React from "react";
-import {useRecoilValue} from "recoil";
-import solarSystemSelector from "../contexts/solarSystemSelector";
 import CelestialObjects from "./CelestialObjects";
 import Orbits from "./Orbits";
+import useSolarSystem from "../hooks/useSolarSystem";
 
 const SolarSystem: React.FC = () => {
 
-    const { system } = useRecoilValue(solarSystemSelector)
+    const { system } = useSolarSystem()
+
+    // console.log('system: ', system)
 
     return (
         <>

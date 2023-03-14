@@ -39,8 +39,8 @@ const Orbit: React.FC<OrbitProps> = ({ path }) => {
                 blending={NormalBlending}
 
                 color={0x3f82cf}
-                lineWidth={100}
-                opacity={0.12}
+                lineWidth={25}
+                opacity={0.24}
                 useMap={1}
                 repeat={new Vector2(12, 1)}
 

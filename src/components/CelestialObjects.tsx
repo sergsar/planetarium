@@ -9,13 +9,9 @@ interface CelestialObjectsProps {
 }
 
 const CelestialObjects: React.FC<CelestialObjectsProps> = ({ system }) => {
-    const [data, setData] = useState<CelestialObjectSnapshot[]>()
+    const [data, setData] = useState<CelestialObjectSnapshot[]>(system.getNextState())
 
     useFrame(() => setData(system.getNextState()))
-
-    if (!data) {
-        return <></>
-    }
 
     return (
         <>
