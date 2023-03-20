@@ -2,20 +2,26 @@ import {CelestialObjectModel} from "../models/celestial-objects-model";
 import * as Astronomy from "astronomy-engine";
 import {Body} from "astronomy-engine";
 import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
-import {TIME_PER_FRAME} from "../constants/solar-system-parameters";
 import {getAngle, normalize} from "../utils/math";
+import {ASTRONOMY_TIME_MULTIPLIER} from "../constants/astronomy-engine";
 
 export class BarycentricSolarSystem {
     public readonly paths
 
-    private time = new Date().getTime()
+    private time = Date.now()
+    private moment = Date.now()
 
     constructor(private data: CelestialObjectModel[]) {
         this.paths = collectOrbitPaths(data, this.time)
     }
 
-    getNextState() {
-        this.time += TIME_PER_FRAME
+    // speed - in hours per second
+    getNextState(speed: number) {
+        const now = Date.now()
+        const delta = now - this.moment
+        this.moment = now
+
+        this.time += delta * 1000 * 60 * 60 * speed * ASTRONOMY_TIME_MULTIPLIER
         return getSnapshotData(this.data, this.time)
     }
 }

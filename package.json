@@ -4,6 +4,9 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.13",
     "@react-three/drei": "^9.56.27",
     "@react-three/fiber": "^8.11.5",
     "@testing-library/jest-dom": "^5.16.5",

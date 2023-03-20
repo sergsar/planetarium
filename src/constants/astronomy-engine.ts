@@ -1,0 +1,1 @@
+export const ASTRONOMY_TIME_MULTIPLIER = 1 / 50
