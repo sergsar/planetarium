@@ -5,7 +5,7 @@ import {convertObjectToModel} from "../utils/celestial-objects";
 
 const celestialObjectsSelector = selector<{ data: CelestialObjectModel[] }>({
     key: 'CelestialObjects',
-    get: async ({ get }) => {
+    get: ({ get }) => {
         const data = get(celestialObjectsDataSelector)
             .data
             .objects

@@ -3,26 +3,17 @@ import * as Astronomy from "astronomy-engine";
 import {Body} from "astronomy-engine";
 import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
 import {getAngle, normalize} from "../utils/math";
-import {ASTRONOMY_TIME_MULTIPLIER} from "../constants/astronomy-engine";
 
 export class BarycentricSolarSystem {
     public readonly paths
 
-    private time = Date.now()
-    private moment = Date.now()
-
-    constructor(private data: CelestialObjectModel[]) {
-        this.paths = collectOrbitPaths(data, this.time)
+    constructor(private data: CelestialObjectModel[], time: number) {
+        console.log('BarycentricSolarSystem constructor on time: ', time)
+        this.paths = collectOrbitPaths(data, time)
     }
 
-    // speed - in hours per second
-    getNextState(speed: number) {
-        const now = Date.now()
-        const delta = now - this.moment
-        this.moment = now
-
-        this.time += delta * 1000 * 60 * 60 * speed * ASTRONOMY_TIME_MULTIPLIER
-        return getSnapshotData(this.data, this.time)
+    getNextState(time: number) {
+        return getSnapshotData(this.data, time)
     }
 }
 
@@ -32,7 +23,7 @@ const collectOrbitPaths = (objects: CelestialObjectModel[], time: number) => {
     const stepAngle = Math.PI * 2 / points
     const sampleTimes = [10000000, 100000000, 500000000, 1000000000, 10000000000, 100000000000]
     const paths = new Array(objects.length).fill(0).map(() => [] as Array<{ x: number, y: number, z: number}>)
-    const angles = paths.map((item) => 0)
+    const angles = paths.map(() => 0)
     const names = []
     for (let sampleTime of sampleTimes) {
         let counter = 0

@@ -1,13 +1,15 @@
 import {Box, Slider} from "@mui/material";
 import React, {useCallback, useDeferredValue, useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
-import timeSpeedSelector from "../contexts/timeSpeedSelector";
+import {speedState} from "../contexts/timeCycleState";
 
 const UiLayer = () => {
-    const [speed, setSpeed] = useRecoilState(timeSpeedSelector)
+    const [speed, setSpeed] = useRecoilState(speedState)
     const [value, setValue] = useState(speed)
     const deferredValue = useDeferredValue(value)
-    useEffect(() => setSpeed(deferredValue), [deferredValue])
+    useEffect(() => {
+        setSpeed(deferredValue)
+    }, [setSpeed, deferredValue])
     const handleChange = useCallback((event: unknown, value: unknown) => {
         if (!(typeof value === 'number')) {
             return
@@ -15,6 +17,7 @@ const UiLayer = () => {
 
         setValue(value)
     }, [])
+
     return (
         <Box zIndex={10} position="absolute" color="white" height={200} width="100%" component="div">
             <Slider value={speed} onChange={handleChange} step={0.1} min={0.1} max={10} valueLabelDisplay="auto" />

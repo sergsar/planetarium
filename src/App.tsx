@@ -6,14 +6,14 @@ import UiLayer from "./components/UiLayer";
 
 
 function App() {
-  return (
+    return (
     <main className="site-content">
         <UiLayer />
         <Canvas className="planetarium-canvas">
             <Scene />
         </Canvas>
     </main>
-  );
+    );
 }
 
 export default App;
