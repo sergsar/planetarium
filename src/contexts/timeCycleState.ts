@@ -3,14 +3,14 @@ import {ASTRONOMY_TIME_MULTIPLIER} from "../constants/astronomy-engine";
 
 const timeCycleInternalState = atom<{ time: number, moment: number }>({
     key: 'TimeCycleInternalState',
-    default: { time: 0, moment: Date.now() },
+    default: { time: Date.now(), moment: 0 },
     effects: [
-        ({ getPromise, node, setSelf, trigger, getLoadable }) => {
+        ({ getPromise, node, setSelf }) => {
             const callback = async () => {
                 requestAnimationFrame(callback)
                 const value = await getPromise(node)
                 const speed = await getPromise(speedState)
-                let moment = value.moment
+                let moment = value.moment || Date.now()
                 const now = Date.now()
                 const delta = now - moment
                 moment = now
