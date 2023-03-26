@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {BarycentricSolarSystem} from "../clases/BarycentricSolarSystem";
+import {BarycentricSolarSystem} from "../classes/BarycentricSolarSystem";
 import {CelestialObjectSnapshot} from "../models/celestial-object-snapshot";
 import {useFrame} from "@react-three/fiber";
 import CelestialObject from "./CelestialObject";

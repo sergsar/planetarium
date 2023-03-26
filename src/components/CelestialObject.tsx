@@ -98,6 +98,13 @@ const Rings: React.FC<{ name: string }> = ({ name }) => {
     return <primitive object={model} position={0} scale={1.9} />
 }
 
+const SEGMENTS: { [key: string]: number } = {
+    'Sun': 64,
+    'Earth': 32,
+    'Jupiter': 32,
+    'Saturn': 32
+}
+
 const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
 
     const mesh = useRef<Mesh>(null)
@@ -106,6 +113,8 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
     const { name, radius, radiusMultiplier, eqImageUrl } = object
 
     const { texture } = useEquirectangularTexture({ path: eqImageUrl })
+
+    const segments = useMemo(() => SEGMENTS[object.name] || 16, [object])
 
     useEffect(() => {
         const position = new Vector3(
@@ -133,7 +142,7 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
             <mesh
                 ref={mesh}
             >
-                <sphereGeometry />
+                <sphereGeometry args={[1, segments, segments]} />
                 {texture && <CelestialObjectMaterial name={name} texture={texture} wireframe={false} />}
             </mesh>
         </group>

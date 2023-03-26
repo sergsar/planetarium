@@ -1,5 +1,6 @@
 import {atom, selector} from "recoil";
-import {ASTRONOMY_TIME_MULTIPLIER} from "../constants/astronomy-engine";
+import {sleep} from "../utils/async";
+import {SECOND_PER_DAY} from "../constants/date-time";
 
 const timeCycleInternalState = atom<{ time: number, moment: number }>({
     key: 'TimeCycleInternalState',
@@ -10,15 +11,22 @@ const timeCycleInternalState = atom<{ time: number, moment: number }>({
                 requestAnimationFrame(callback)
                 const value = await getPromise(node)
                 const speed = await getPromise(speedState)
-                let moment = value.moment || Date.now()
+                let moment = value.moment
+                if (!moment) {
+                    // recoil freezing hot fix TODO: fix and remove
+                    await sleep(500)
+                    // initialization
+                    moment = value.time
+                }
                 const now = Date.now()
                 const delta = now - moment
+
                 moment = now
-                setSelf({
+                setSelf(() => ({
                     ...value,
-                    time: value.time + delta * 1000 * 60 * 60 * speed * ASTRONOMY_TIME_MULTIPLIER,
+                    time: value.time + delta * SECOND_PER_DAY * speed,
                     moment
-                })
+                }))
             }
             requestAnimationFrame(callback)
         }

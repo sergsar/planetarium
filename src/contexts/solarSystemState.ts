@@ -1,7 +1,7 @@
 import {atom} from "recoil";
 import {timeSelector} from "./timeCycleState";
 import celestialObjectsSelector from "./celestialObjectsSelector";
-import {BarycentricSolarSystem} from "../clases/BarycentricSolarSystem";
+import {BarycentricSolarSystem} from "../classes/BarycentricSolarSystem";
 
 const solarSystemState = atom<BarycentricSolarSystem>({
     key: 'SolarSystemState',

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 
-const Preloader = () => {
+const Preloader: React.FC<{ message?: string }> = ({ message = 'Loading' }) => {
     const [progress, setProgress] = useState('.')
+
     useEffect(() => {
         let value = progress
         const timer = setInterval(() => {
@@ -12,9 +13,10 @@ const Preloader = () => {
             clearInterval(timer)
         }
     }, [])
+
     return (
         <div className="site-loading">
-            <div className="site-loading-text">Loading{progress}</div>
+            <div className="site-loading-text">{message}{progress}</div>
         </div>
     )
 }

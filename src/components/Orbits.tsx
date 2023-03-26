@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import {BarycentricSolarSystem} from "../clases/BarycentricSolarSystem";
+import {BarycentricSolarSystem} from "../classes/BarycentricSolarSystem";
 import {extend, useThree} from '@react-three/fiber'
 import { MeshLineGeometry, MeshLineMaterial } from "meshline"
 import {useRecoilValue} from "recoil";

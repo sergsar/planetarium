@@ -24,6 +24,7 @@ code {
 }
 
 .site-loading {
+  position: absolute;
   display: flex;
   background: black;
   width: 100%;
