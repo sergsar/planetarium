@@ -7,6 +7,8 @@ import {RecoilRoot} from "recoil";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Preloader from "./components/Preloader";
 import {createTheme, CssBaseline, ThemeOptions, ThemeProvider} from "@mui/material";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 
 const themeOptions: ThemeOptions = {
     palette: {
@@ -30,9 +32,11 @@ root.render(
       <RecoilRoot>
           <ErrorBoundary>
             <React.Suspense fallback={<Preloader />}>
-                <ThemeProvider theme={createTheme(themeOptions)}>
-                    <App />
-                </ThemeProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <ThemeProvider theme={createTheme(themeOptions)}>
+                        <App />
+                    </ThemeProvider>
+                </LocalizationProvider>
             </React.Suspense>
           </ErrorBoundary>
       </RecoilRoot>

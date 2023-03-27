@@ -38,7 +38,14 @@ export const speedState = atom({
     default: 1
 })
 
-export const timeSelector = selector({
+export const timeSelector = selector<number>({
     key: 'TimeSelector',
-    get: ({ get }) => get(timeCycleInternalState).time
+    get: ({ get }) => get(timeCycleInternalState).time,
+    set: ({ get, set }, newValue) => {
+        const state = get(timeCycleInternalState)
+        set(timeCycleInternalState, () => ({
+            ...state,
+            time: newValue as number
+        }))
+    }
 })

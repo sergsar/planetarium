@@ -1,35 +1,47 @@
 import {Box, Typography} from "@mui/material";
-import React, {useMemo} from "react";
+import React from "react";
 import TimeSlider from "./TimeSlider";
 import {useRecoilValue} from "recoil";
-import {speedState, timeSelector} from "../contexts/timeCycleState";
+import {speedState} from "../contexts/timeCycleState";
+import DatePicker from "./DatePicker";
 
 const UiLayer = () => {
-    const time = useRecoilValue(timeSelector)
+
     const speed = useRecoilValue(speedState)
-    const date = useMemo(() => new Date(time).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric'}), [time])
+
+
+
+
     return (
         <Box
             display="flex"
             flexDirection="column"
-            zIndex={10}
-            sx={{ pointerEvents: 'none' }}
+            zIndex={9}
+            sx={{ pointerEvents: 'none', '> *': { pointerEvents: 'auto' } }}
             position="absolute"
             color="white"
             height="100%"
             width="100%"
             component="div"
         >
-            <Box component="div" display="flex" flexDirection="row">
+            <Box component="div" display="flex" flexDirection="row" zIndex={99}>
                 TODO: About Dropdown
-                <Box margin="32px" component="div" marginLeft="auto" marginRight="32px">
-                    <Typography variant="h6">{date}</Typography>
-                </Box>
+                <DatePicker
+                    margin="16px"
+                    marginLeft="auto"
+                    marginRight="16px"
+                    border="1px solid"
+                    borderRadius="10px"
+                    padding="16px"
+                    width="200px"
+                    sx={{
+                        borderColor: "rgba(255, 255, 255, 0.3)"
+                    }}
+                />
             </Box>
             <Box
                 sx={{
                     backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    pointerEvents: 'auto',
                     borderTop: '1px solid',
                     borderColor: "rgba(255, 255, 255, 0.3)"
                 }}
