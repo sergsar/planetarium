@@ -36,7 +36,10 @@ const DatePicker: React.FC<{} & BoxProps> = ({ ...props }) => {
     }, [setTime, view])
 
     return (
-        <Box {...props} component="div">
+        <Box
+            {...props}
+            component="div"
+        >
             <MuiDatePicker
                 value={value}
                 open={open}
@@ -48,17 +51,24 @@ const DatePicker: React.FC<{} & BoxProps> = ({ ...props }) => {
             />
             <Box
                 component="div"
-                onClick={() => onClick()}
                 display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
+                flexDirection="column"
+                onClick={() => onClick()}
             >
-                <Typography
-                    width="40px"
-                    textAlign="center"
-                    variant="h6"
-                >{day}</Typography>
-                <Typography variant="h6">{month}</Typography>
+                <Box
+                    component="div"
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                >
+                    <Typography
+                        width="40px"
+                        textAlign="center"
+                        variant="h6"
+                    >{day}</Typography>
+                    <Typography variant="h6">{month}</Typography>
+                </Box>
+                <Typography variant="caption" textAlign="center" >Pick me</Typography>
             </Box>
         </Box>
     )
