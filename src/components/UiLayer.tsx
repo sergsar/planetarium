@@ -4,6 +4,7 @@ import TimeSlider from "./TimeSlider";
 import {useRecoilValue} from "recoil";
 import {speedState} from "../contexts/timeCycleState";
 import DatePicker from "./DatePicker";
+import Information from "./Information";
 
 const UiLayer = () => {
 
@@ -25,17 +26,15 @@ const UiLayer = () => {
             component="div"
         >
             <Box component="div" display="flex" flexDirection="row" zIndex={99}>
-                TODO: About Dropdown
+                <Information margin="16px" />
                 <DatePicker
                     margin="16px"
                     marginLeft="auto"
                     marginRight="16px"
                     border="1px solid"
                     borderRadius="10px"
-                    padding="16px"
-                    width="200px"
                     sx={{
-                        borderColor: "rgba(255, 255, 255, 0.3)"
+                        borderColor: 'rgba(255, 255, 255, 0.3)'
                     }}
                 />
             </Box>
