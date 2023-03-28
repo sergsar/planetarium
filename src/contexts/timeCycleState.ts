@@ -4,16 +4,7 @@ import {SECOND_PER_DAY} from "../constants/date-time";
 
 export const timeState = atom<number>({
     key: 'TimeCycleInternalState',
-    default: new Promise(async (resolve) => {
-        let frame
-        resolve(Date.now())
-        const callback = () => {
-            frame = requestAnimationFrame(callback)
-            console.log('frame: ', frame)
-            cancelAnimationFrame(frame)
-        }
-        frame = requestAnimationFrame(callback)
-    }),
+    default: Date.now(),
     effects: [
         ({ getPromise, node, setSelf }) => {
             let moment = 0
