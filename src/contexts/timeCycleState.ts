@@ -17,7 +17,7 @@ export const timeState = atom<number>({
                     await sleep(500)
                     // initialization
                     console.log('init')
-                    moment = value
+                    moment = Date.now()
                 }
                 const now = Date.now()
                 const delta = now - moment
