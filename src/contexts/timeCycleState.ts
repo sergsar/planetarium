@@ -1,37 +1,89 @@
-import {atom} from "recoil";
-import {sleep} from "../utils/async";
+import {atom, selector} from "recoil";
 import {SECOND_PER_DAY} from "../constants/date-time";
+import {sleep} from "../utils/async";
 
-export const timeState = atom<number>({
-    key: 'TimeCycleInternalState',
-    default: Date.now(),
+
+interface IFrameState {
+    frame: number,
+    speed: number,
+    moment: number,
+    time: number
+}
+const incrementFrameState = (state: IFrameState, frame: number) => {
+    let { moment, time, speed } = state
+    const now = Date.now()
+    const delta = now - moment
+
+    moment = now
+    return {
+        ...state,
+        moment,
+        frame,
+        time: time + delta * SECOND_PER_DAY * speed
+    }
+}
+
+const frameState = atom<IFrameState>({
+    key: 'frameState',
+    default: {
+       moment: Date.now(),
+       frame: 0,
+       speed: 1,
+       time: Date.now()
+    },
     effects: [
-        ({ getPromise, node, setSelf }) => {
-            let moment = 0
-            const callback = async () => {
-                const value = await getPromise(node)
-                const speed = await getPromise(speedState)
-
-                if (!moment) {
-                    // recoil freezing hot fix TODO: fix and remove
-                    await sleep(500)
-                    // initialization
-                    console.log('init')
-                    moment = Date.now()
-                }
-                const now = Date.now()
-                const delta = now - moment
-
-                moment = now
-                setSelf(value + delta * SECOND_PER_DAY * speed)
-                requestAnimationFrame(callback)
+        ({ node, getLoadable, setSelf }) => {
+            const loadable = getLoadable(node)
+            if (loadable.state === 'hasValue') {
+                console.log('canceling animation frame: ', loadable.contents.frame)
+                cancelAnimationFrame(loadable.contents.frame)
             }
-            requestAnimationFrame(callback)
+        },
+        ({ setSelf }) => {
+            // starting frame incrementation
+            const callback = () => {
+                const frame = requestAnimationFrame(callback)
+                if (frame < 100) {
+                    return
+                }
+                setSelf((state) =>
+                    incrementFrameState(state as IFrameState, frame)
+                )
+            }
+            const frame = requestAnimationFrame(callback)
+            setSelf((state) =>
+                incrementFrameState(state as IFrameState, frame)
+            )
         }
     ]
 })
 
-export const speedState = atom({
-    key: 'SpeedState',
-    default: 1
+export const timeSelector = selector({
+    key: 'TimeSelector',
+    get: ({ get }) => get(frameState).time,
+    set: ({ set }, newValue) => {
+        console.log('set time')
+        set(
+            frameState,
+            (state: IFrameState) => ({
+                ...state,
+                time: newValue as number
+            })
+        )
+    }
+})
+
+export const speedSelector = selector({
+    key: 'SpeedSelector',
+    get: ({ get }) => get(frameState).speed,
+    set: ({ set }, newValue) => {
+        console.log('set speed')
+        set(
+            frameState,
+            (state: IFrameState) => ({
+                ...state,
+                speed: newValue as number
+            })
+        )
+    }
 })

@@ -6,10 +6,10 @@ import {OrbitControls as OrbitControlsType} from "three-stdlib";
 import SolarSystem from "./SolarSystem";
 import useEquirectangularTexture from "../hooks/useEquirectangularTexture";
 import {useRecoilValue} from "recoil";
-import {speedState} from "../contexts/timeCycleState";
+import {speedSelector} from "../contexts/timeCycleState";
 
 const Scene: React.FC = () => {
-    const timeSpeed = useRecoilValue(speedState)
+    const timeSpeed = useRecoilValue(speedSelector)
     const [speed, setSpeed] = useState(100)
     const { camera } = useThree()
 

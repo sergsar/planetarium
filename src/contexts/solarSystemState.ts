@@ -1,5 +1,5 @@
 import {atom} from "recoil";
-import {timeState} from "./timeCycleState";
+import {timeSelector} from "./timeCycleState";
 import celestialObjectsSelector from "./celestialObjectsSelector";
 import {BarycentricSolarSystem} from "../classes/BarycentricSolarSystem";
 
@@ -8,7 +8,7 @@ const solarSystemState = atom<BarycentricSolarSystem>({
     effects: [
         ({ getPromise, setSelf }) => {
             Promise.all([
-                getPromise(timeState),
+                getPromise(timeSelector),
                 getPromise(celestialObjectsSelector)
             ]).then(([time, { data }]) => {
                 setSelf(new BarycentricSolarSystem(data, time))

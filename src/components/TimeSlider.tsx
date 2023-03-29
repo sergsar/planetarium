@@ -1,10 +1,10 @@
 import {useRecoilState} from "recoil";
-import {speedState} from "../contexts/timeCycleState";
+import {speedSelector} from "../contexts/timeCycleState";
 import React, {useCallback, useDeferredValue, useEffect, useState} from "react";
 import {Box, BoxProps, Slider} from "@mui/material";
 
 const TimeSlider: React.FC<{} & BoxProps> = ({ ...props }) => {
-    const [speed, setSpeed] = useRecoilState(speedState)
+    const [speed, setSpeed] = useRecoilState(speedSelector)
     const [value, setValue] = useState(speed)
     const deferredValue = useDeferredValue(value)
     useEffect(() => {
@@ -14,8 +14,11 @@ const TimeSlider: React.FC<{} & BoxProps> = ({ ...props }) => {
         if (!(typeof value === 'number')) {
             return
         }
-
-        setValue(value)
+        let result = value
+        if (Math.abs(value) < 0.2) {
+            result = 0
+        }
+        setValue(result)
     }, [])
 
     return (

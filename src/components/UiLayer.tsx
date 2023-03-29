@@ -2,16 +2,13 @@ import {Box, Typography} from "@mui/material";
 import React from "react";
 import TimeSlider from "./TimeSlider";
 import {useRecoilValue} from "recoil";
-import {speedState} from "../contexts/timeCycleState";
+import {speedSelector} from "../contexts/timeCycleState";
 import DatePicker from "./DatePicker";
 import Information from "./Information";
 
 const UiLayer = () => {
 
-    const speed = useRecoilValue(speedState)
-
-
-
+    const speed = useRecoilValue(speedSelector)
 
     return (
         <Box
@@ -76,11 +73,11 @@ const UiLayer = () => {
                             {speed}
                         </Typography>
                         <Typography width="130px" textAlign="center" variant="caption">
-                            days per second
+                            {!!speed && Math.abs(speed) <= 1 ? 'day' : 'days'}  per second
                         </Typography>
                     </Box>
                     <Typography width="100%" textAlign="center" variant="caption">
-                        ({Math.sign(speed) < 0 ? 'reverse' : 'forward'})
+                        ({!speed ? 'freeze' : Math.sign(speed) < 0 ? 'reverse' : 'forward'})
                     </Typography>
                 </Box>
             </Box>

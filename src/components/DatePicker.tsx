@@ -1,12 +1,12 @@
 import {Box, BoxProps, Typography} from "@mui/material";
 import React, {useCallback, useMemo, useState} from "react";
 import {useRecoilState} from "recoil";
-import {timeState} from "../contexts/timeCycleState";
+import {timeSelector} from "../contexts/timeCycleState";
 import { MobileDatePicker as MuiDatePicker, DateView } from "@mui/x-date-pickers"
 import dayjs, {Dayjs} from "dayjs";
 
 const DatePicker: React.FC<{} & BoxProps> = ({ ...props }) => {
-    const [time, setTime] = useRecoilState(timeState)
+    const [time, setTime] = useRecoilState(timeSelector)
 
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState<Dayjs|null>(dayjs())
