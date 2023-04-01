@@ -1,5 +1,5 @@
 import {Box, BoxProps, Typography} from "@mui/material";
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useDeferredValue, useMemo, useState} from "react";
 import {useRecoilState} from "recoil";
 import {timeSelector} from "../contexts/timeCycleState";
 import { MobileDatePicker as MuiDatePicker, DateView } from "@mui/x-date-pickers"
@@ -7,21 +7,22 @@ import dayjs, {Dayjs} from "dayjs";
 
 const DatePicker: React.FC<{} & BoxProps> = ({ ...props }) => {
     const [time, setTime] = useRecoilState(timeSelector)
+    const timeDeferred = useDeferredValue(time)
 
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState<Dayjs|null>(dayjs())
     const [view, setView] = useState<DateView>('day')
 
-    const date = useMemo(() => new Date(time), [time])
+    const date = useMemo(() => new Date(timeDeferred), [timeDeferred])
     const month = useMemo(() => date
         .toLocaleDateString(undefined, { month: 'short', year: 'numeric'}), [date])
     const day = useMemo(() => date
         .toLocaleDateString(undefined, { day: 'numeric' }), [date])
 
     const onClick = useCallback(() => {
-        setValue(dayjs(time))
+        setValue(dayjs(timeDeferred))
         setOpen(true)
-    }, [time])
+    }, [timeDeferred])
 
     const onChange = useCallback((value: Dayjs | null) => {
         if (view !== 'day') {
@@ -35,30 +36,31 @@ const DatePicker: React.FC<{} & BoxProps> = ({ ...props }) => {
         setOpen(false)
     }, [setTime, view])
 
-    // @ts-ignore
     return (
         <Box
             {...props}
             component="div"
             minWidth="200px"
         >
-            <MuiDatePicker
-                value={value}
-                open={open}
-                views={['year', 'month', 'day']}
-                sx={{
-                    position: 'absolute',
-                    visibility: 'hidden',
-                    '.MuiPaper-root': {
-                        backgroundColor: 'rgba(120, 120, 120, 0.2)'
-                    },
+            {useMemo(() => (
+                <MuiDatePicker
+                    value={value}
+                    open={open}
+                    views={['year', 'month', 'day']}
+                    sx={{
+                        position: 'absolute',
+                        visibility: 'hidden',
+                        '.MuiPaper-root': {
+                            backgroundColor: 'rgba(120, 120, 120, 0.2)'
+                        },
 
-                }}
-                slotProps={{ mobilePaper: { color: 'white' } }}
-                onClose={() => setOpen(false)}
-                onChange={(value) => onChange(value)}
-                onViewChange={(view) => setView(view)}
-            />
+                    }}
+                    slotProps={{ mobilePaper: { color: 'white' } }}
+                    onClose={() => setOpen(false)}
+                    onChange={(value) => onChange(value)}
+                    onViewChange={(view) => setView(view)}
+                />
+            ), [value, open, view])}
             <Box
                 component="div"
                 display="flex"

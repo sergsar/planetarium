@@ -57,7 +57,7 @@ const Information: React.FC<{} & BoxProps> = ({ ...props }) => {
                         </Typography>
                         <Typography variant="body1">
                             <br />
-                            The model built with React, Three Fiber and Astronomy Engine
+                            The model built using React, Three Fiber and Astronomy Engine
                             <br />
                             <br />
                             <Link href="https://github.com/cosinekitty/astronomy" target="_blank" sx={{ color: 'lightblue' }}>Astronomy Engine</Link> library used to accurately render the planets spinning and rotation around the Sun relatively to the date.
