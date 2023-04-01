@@ -1,28 +1,29 @@
 import {Box, BoxProps, Typography} from "@mui/material";
-import React, {useCallback, useDeferredValue, useMemo, useState} from "react";
-import {useRecoilState} from "recoil";
+import React, {useCallback, useMemo, useState} from "react";
+import {useSetRecoilState} from "recoil";
 import {timeSelector} from "../contexts/timeCycleState";
 import { MobileDatePicker as MuiDatePicker, DateView } from "@mui/x-date-pickers"
 import dayjs, {Dayjs} from "dayjs";
+import useDeferredRecoilValue from "../hooks/useDeferredRecoilValue";
 
 const DatePicker: React.FC<{} & BoxProps> = ({ ...props }) => {
-    const [time, setTime] = useRecoilState(timeSelector)
-    const timeDeferred = useDeferredValue(time)
+    const setTime = useSetRecoilState(timeSelector)
+    const time = useDeferredRecoilValue(timeSelector)
 
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState<Dayjs|null>(dayjs())
     const [view, setView] = useState<DateView>('day')
 
-    const date = useMemo(() => new Date(timeDeferred), [timeDeferred])
+    const date = useMemo(() => new Date(time), [time])
     const month = useMemo(() => date
         .toLocaleDateString(undefined, { month: 'short', year: 'numeric'}), [date])
     const day = useMemo(() => date
         .toLocaleDateString(undefined, { day: 'numeric' }), [date])
 
     const onClick = useCallback(() => {
-        setValue(dayjs(timeDeferred))
+        setValue(dayjs(time))
         setOpen(true)
-    }, [timeDeferred])
+    }, [time])
 
     const onChange = useCallback((value: Dayjs | null) => {
         if (view !== 'day') {
