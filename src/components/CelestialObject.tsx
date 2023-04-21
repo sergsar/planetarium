@@ -190,7 +190,7 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
           setObjectName(name)
           e.stopPropagation()
         }}
-        scale={1 / scaledRadius}
+        scale={Math.max(1, 1 / scaledRadius)}
         visible={false}
       >
         <sphereGeometry args={[1, 8, 8]} />
