@@ -1,30 +1,28 @@
 import './App.css'
 
 import { Canvas } from '@react-three/fiber'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { Suspense, useMemo } from 'react'
 
+import { Delay } from './components/Delay'
+import Preloader from './components/Preloader'
 import Scene from './components/Scene'
 import UiLayer from './components/UiLayer'
 
 console.log(window.navigator)
 
 function App() {
-  // preloader hotfix
-  const [uiEnabled, setUiEnabled] = useState(false)
-
   const distance = useMemo(
     () => (window.innerWidth > window.innerHeight ? 10 : 20),
     []
   )
 
-  useEffect(() => {
-    const timeout = setTimeout(() => setUiEnabled(true), 100)
-    return () => clearTimeout(timeout)
-  }, [])
-
   return (
     <main className="site-content">
-      {uiEnabled && <UiLayer />}
+      <Suspense fallback={<Preloader />}>
+        <UiLayer />
+        {/* Prevents UI from loading before the scene */}
+        <Delay value={500} />
+      </Suspense>
       <Canvas
         className="planetarium-canvas"
         frameloop="always"
