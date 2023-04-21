@@ -1,6 +1,6 @@
 import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   DoubleSide,
   Group,
@@ -17,6 +17,7 @@ import {
   SELF_ROTATION_MULTIPLIER
 } from '../constants/solar-system-parameters'
 import fbxSelector from '../contexts/fbxSelector'
+import objectNameState from '../contexts/objectNameState'
 import useEquirectangularTexture from '../hooks/useEquirectangularTexture'
 import { CelestialObjectSnapshot } from '../models/celestial-object-snapshot'
 import * as atmosphereShaders from '../shaders/atmosphere-shaders'
@@ -128,10 +129,16 @@ const SEGMENTS: { [key: string]: number } = {
 }
 
 const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
+  const setObjectName = useSetRecoilState(objectNameState)
   const mesh = useRef<Mesh>(null)
   const group = useRef<Group>(null)
 
   const { name, radius, radiusMultiplier, eqImageUrl } = object
+
+  const scaledRadius = useMemo(
+    () => radius * RADIUS_MULTIPLIER * radiusMultiplier,
+    [radius, radiusMultiplier]
+  )
 
   const { texture } = useEquirectangularTexture({ path: eqImageUrl })
 
@@ -164,7 +171,7 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
   })
 
   return (
-    <group ref={group} scale={radius * RADIUS_MULTIPLIER * radiusMultiplier}>
+    <group ref={group} scale={scaledRadius}>
       {['Saturn'].includes(name) && <Rings name="saturn" />}
       {['Uranus'].includes(name) && <Rings name="uranus" />}
       {['Earth'].includes(name) && <Atmosphere />}
@@ -177,6 +184,16 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
             wireframe={false}
           />
         )}
+      </mesh>
+      <mesh
+        onClick={(e) => {
+          setObjectName(name)
+          e.stopPropagation()
+        }}
+        scale={1 / scaledRadius}
+        visible={false}
+      >
+        <sphereGeometry args={[1, 8, 8]} />
       </mesh>
     </group>
   )

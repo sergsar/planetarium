@@ -8,6 +8,7 @@ export interface CelestialObjectContract {
   radius_multiplier: number
   self_rotation_multiplier: number
   symbolic_distance: number
+  approximate_distance: number
   earth_mass: number
   eq_image_url: string
 }

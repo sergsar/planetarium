@@ -11,6 +11,7 @@ export const convertObjectToModel = (
     radiusMultiplier: item.radius_multiplier,
     rotationMultiplier: item.self_rotation_multiplier,
     distance: item.symbolic_distance,
+    approximateDistance: item.approximate_distance,
     eqImageUrl: item.eq_image_url
   }
 }

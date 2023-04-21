@@ -50,7 +50,16 @@ const DatePicker: React.FC<BoxProps> = ({ ...props }) => {
   )
 
   return (
-    <Box {...props} component="div" minWidth="200px">
+    <Box
+      {...props}
+      component="div"
+      minWidth="200px"
+      border="1px solid"
+      borderRadius="10px"
+      sx={{
+        borderColor: 'rgba(255, 255, 255, 0.3)'
+      }}
+    >
       {useMemo(
         () => (
           <MuiDatePicker
