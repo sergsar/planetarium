@@ -1,6 +1,6 @@
 import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   DoubleSide,
   Group,
@@ -72,23 +72,30 @@ const CelestialObjectMaterial: React.FC<CelestialObjectMaterialProps> = ({
   return <meshPhongMaterial map={texture} color="white" wireframe={wireframe} />
 }
 
-const Atmosphere: React.FC = () => {
+const Atmosphere: React.FC<{
+  color: Vector3
+  scale: number
+  melt?: number
+}> = ({ color, scale, melt = 1 }) => {
   const material = useRef<ShaderMaterial>(null)
 
   const atmMaterialParameters = useMemo(() => {
     return {
       vertexShader: atmosphereShaders.vertex,
-      fragmentShader: atmosphereShaders.fragment
+      fragmentShader: atmosphereShaders.fragment,
+      uniforms: {
+        color: { value: color },
+        melt: { value: melt }
+      }
     }
   }, [])
 
   return (
-    <mesh scale={1.1}>
+    <mesh scale={scale}>
       <sphereGeometry />
       <shaderMaterial
         ref={material}
         {...atmMaterialParameters}
-        name={'123'}
         transparent={true}
       />
     </mesh>
@@ -129,7 +136,7 @@ const SEGMENTS: { [key: string]: number } = {
 }
 
 const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
-  const setObjectName = useSetRecoilState(objectNameState)
+  const [objectName, setObjectName] = useRecoilState(objectNameState)
   const mesh = useRef<Mesh>(null)
   const group = useRef<Group>(null)
 
@@ -174,8 +181,14 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
     <group ref={group} scale={scaledRadius}>
       {['Saturn'].includes(name) && <Rings name="saturn" />}
       {['Uranus'].includes(name) && <Rings name="uranus" />}
-      {['Earth'].includes(name) && <Atmosphere />}
-      <mesh ref={mesh}>
+      {['Earth'].includes(name) && (
+        <Atmosphere color={new Vector3(0.7, 0.7, 1)} scale={1.1} melt={0.2} />
+      )}
+      {objectName === name && (
+        <Atmosphere color={new Vector3(1, 1, 1)} scale={1.15} melt={0.4} />
+      )}
+
+      <mesh ref={mesh} visible={true}>
         <sphereGeometry args={[1, segments, segments]} />
         {texture && (
           <CelestialObjectMaterial
@@ -187,13 +200,13 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
       </mesh>
       <mesh
         onClick={(e) => {
-          setObjectName(name)
+          setObjectName(objectName === name ? null : name)
           e.stopPropagation()
         }}
         scale={Math.max(1, 1 / scaledRadius)}
         visible={false}
       >
-        <sphereGeometry args={[1, 8, 8]} />
+        <sphereGeometry args={[1, segments, segments]} />
       </mesh>
     </group>
   )

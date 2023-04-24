@@ -33,7 +33,8 @@ export const ObjectInfoPanel = forwardRef<typeof Box, BoxProps>(
             borderRadius="10px"
             padding="16px"
             sx={{
-              borderColor: 'rgba(255, 255, 255, 0.3)'
+              borderColor: 'rgba(255, 255, 255, 0.3)',
+              backdropFilter: 'brightness(50%)'
             }}
           >
             <Typography textAlign="center">{objectName}</Typography>

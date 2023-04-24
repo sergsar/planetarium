@@ -7,11 +7,16 @@ import {
   Typography
 } from '@mui/material'
 import React from 'react'
+import { useSetRecoilState } from 'recoil'
+
+import objectNameState from '../contexts/objectNameState'
 
 const Information: React.FC<BoxProps> = ({ ...props }) => {
+  const setObjectName = useSetRecoilState(objectNameState)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setObjectName(null)
     setAnchorEl(anchorEl ? null : event.currentTarget)
   }
 
@@ -49,7 +54,7 @@ const Information: React.FC<BoxProps> = ({ ...props }) => {
               padding: '24px',
               border: '1px solid',
               color: 'white',
-              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              backdropFilter: 'brightness(50%) blur(10px)',
               borderColor: 'rgba(255, 255, 255, 0.3)',
               borderRadius: '20px',
               '@media (max-width: 900px)': {
@@ -96,7 +101,6 @@ const Information: React.FC<BoxProps> = ({ ...props }) => {
                 Source code
               </Link>
             </Typography>
-            <Typography />
           </Box>
         </Popper>
       </Box>

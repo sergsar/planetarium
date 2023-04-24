@@ -14,7 +14,7 @@ const UiLayer = () => {
       flexDirection="column"
       zIndex={9}
       sx={passPointerEvents}
-      position="absolute"
+      position="fixed"
       color="white"
       height="100%"
       width="100%"
