@@ -8,11 +8,11 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import { timeSelector } from '../contexts/clockSelectors'
-import useDeferredRecoilValue from '../hooks/useDeferredRecoilValue'
+import { useTime } from '../hooks/useTime'
 
 const DatePicker: React.FC<BoxProps> = ({ ...props }) => {
   const setTime = useSetRecoilState(timeSelector)
-  const time = useDeferredRecoilValue(timeSelector)
+  const time = useTime()
 
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState<Dayjs | null>(dayjs())
