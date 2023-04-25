@@ -182,7 +182,7 @@ const CelestialObject: React.FC<CelestialObjectProps> = ({ object }) => {
       {['Saturn'].includes(name) && <Rings name="saturn" />}
       {['Uranus'].includes(name) && <Rings name="uranus" />}
       {['Earth'].includes(name) && (
-        <Atmosphere color={new Vector3(0.7, 0.7, 1)} scale={1.1} melt={0.2} />
+        <Atmosphere color={new Vector3(0.7, 0.7, 1)} scale={1.1} melt={0.25} />
       )}
       {objectName === name && (
         <Atmosphere color={new Vector3(1, 1, 1)} scale={1.15} melt={0.4} />

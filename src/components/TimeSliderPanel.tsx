@@ -2,7 +2,7 @@ import { Box, BoxProps, Typography } from '@mui/material'
 import React, { forwardRef } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { speedSelector } from '../contexts/timeCycleState'
+import { speedSelector } from '../contexts/clockSelectors'
 import TimeSlider from './TimeSlider'
 
 export const TimeSliderPanel = forwardRef<typeof Box, BoxProps>(

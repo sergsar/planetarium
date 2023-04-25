@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 
-import { timeSelector } from '../contexts/timeCycleState'
+import { timeSelector } from '../contexts/clockSelectors'
 import useDeferredRecoilValue from '../hooks/useDeferredRecoilValue'
 
 const DatePicker: React.FC<BoxProps> = ({ ...props }) => {

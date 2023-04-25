@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil'
 import { Vector3 } from 'three'
 import { OrbitControls as OrbitControlsType } from 'three-stdlib'
 
-import { speedSelector } from '../contexts/timeCycleState'
+import { speedSelector } from '../contexts/clockSelectors'
 import useEquirectangularTexture from '../hooks/useEquirectangularTexture'
 import SolarSystem from './SolarSystem'
 

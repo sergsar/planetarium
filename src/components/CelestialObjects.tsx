@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { BarycentricSolarSystem } from '../classes/BarycentricSolarSystem'
-import { timeSelector } from '../contexts/timeCycleState'
+import { clockSelector } from '../contexts/clockSelectors'
 import { CelestialObjectSnapshot } from '../models/celestial-object-snapshot'
 import CelestialObject from './CelestialObject'
 
@@ -12,13 +12,13 @@ interface CelestialObjectsProps {
 }
 
 const CelestialObjects: React.FC<CelestialObjectsProps> = ({ system }) => {
-  const time = useRecoilValue(timeSelector)
+  const clock = useRecoilValue(clockSelector)
 
   const [data, setData] = useState<CelestialObjectSnapshot[]>(
-    system.getNextState(time)
+    system.getNextState(clock.getTime())
   )
 
-  useFrame(() => setData(system.getNextState(time)))
+  useFrame(() => setData(system.getNextState(clock.getTime())))
 
   return (
     <>

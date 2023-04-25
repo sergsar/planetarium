@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { useRecoilState } from 'recoil'
 
-import { speedSelector } from '../contexts/timeCycleState'
+import { speedSelector } from '../contexts/clockSelectors'
 
 const TimeSlider: React.FC<BoxProps> = ({ ...props }) => {
   const [speed, setSpeed] = useRecoilState(speedSelector)
